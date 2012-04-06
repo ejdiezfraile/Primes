@@ -9,18 +9,25 @@ package tools.math {
 		// divisores
 		private function findNextPrime(primes:Array):Number {
 			var ini:Number = primes[primes.length - 1] +1;
+			var limit:Number = Math.sqrt(ini);
 			
 			var isPrime:Boolean = false;
 			while (!isPrime) {
 				var discard:Boolean = false;
 				for (var i:int = 0; i < primes.length; i++) {
-					if (ini % primes[i] == 0) {
+					if (primes[i] > limit) {
+						// Alcanzado el límite de búsqueda.
+						// No puede tener divisores mayores que su raiz cuadrada
+						break;
+					}else if (ini % primes[i] == 0) {
+						// Encontrado divisor
 						discard = true;
 						break;
 					}
 				}
 				if (discard) {
 					ini++;
+					limit = Math.sqrt(ini);
 				} else {
 					isPrime = true;
 				}
